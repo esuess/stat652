@@ -1,0 +1,112 @@
+---
+title: "Welcome"
+author: "Prof. Eric A. Suess"
+date: "1/22/2024"
+format: 
+  revealjs:
+    self-contained: true
+---
+
+## Welcome to Stat. 652 Statistical Learning
+
+
+This course will be about Data Science and the use of Statistical Learning/Machine Learning/Artificial Intelligence to analyze data.
+
+Our focus will be on using the setup of Machine Learning with *training data*, *test data*, and *validation data*.
+
+For *classification problems* we will discuss *accuracy* using *confusion tables*.
+
+## Welcome to Stat. 652 Statistical Learning
+
+We will also be using modern R packages to fit the models we will be learning about. 
+
+We will be using traditional R packages and the [tidyverse](https://www.tidyverse.org/) and [tidymodels](https://www.tidymodels.org/).
+
+We will be using [h2O.ai](https://www.h2o.ai/) and [h2O Driverless AI](https://www.h2o.ai/products/h2o-driverless-ai/).
+
+We will be using [Tensorflow for R](https://tensorflow.rstudio.com/) and [keras for R](https://tensorflow.rstudio.com/keras/).
+
+We may discuss [Spark for R](https://spark.rstudio.com/).
+
+## Statistical Topics
+
+- Sampling from a population
+- Sample statistics
+- Sampling distributions
+- Bootstrapping
+- Outliers
+- Linear Regression - Prediction
+- Confounding Variables
+- Logistic Regression - Classification
+- Problems with p-values
+
+## Statistical Learning, Machine Learning, Artificial Intelligence, and Predictive Analytics
+
+- Supervised Learning
+- Unsupervised Learning
+- Ensemble Models
+
+## Supervised Learning
+
+**Classifiers and Regression/Prediction**
+
+- k-Nearest Neighbors (kNN)
+- Naive Bayes
+- Decision Trees
+- Boosting
+- Bagging
+- Random Forests
+- Artificial Neural Networks (ANN)
+- Deep Learning
+- Ensemble Methods
+- Forecasting
+
+## Evaluation Models
+
+- Training, Validation, Testing Data
+- Cross-validation
+- Confusion Matrix
+- ROC curves
+- Bias-variance Trade-off
+- Regularization
+
+## Unsupervised Learning
+
+**Clustering**
+
+- Hierarchical Clustering
+- k-Means
+- DBSCAN
+
+**Dimension Reduction**
+
+- Singular Value Decomposition (SVD)
+- Principal Component Analysis (PCA)
+- Factor Analysis
+- Multidimensional Scaling (MDS)
+
+## Simulation
+
+- Simulating variability
+
+## References
+
+There are many many excellent references that will be useful for this class.
+
+There are some references provided on the syllabus.
+
+There will be many links given on the website.
+
+My current favorite podcast about data science is [DataFramed](https://www.datacamp.com/community/podcast).
+
+
+
+
+
+
+
+
+
+
+
+

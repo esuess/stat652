@@ -1,0 +1,348 @@
+---
+title: "Chapter 9 Statistical Foundations"
+format: 
+  html:
+    embed-resources: true
+---
+
+## Samples and Populations
+
+
+The population considered in the book is contained in the *nycflights13* dataset.  In the *nycflights13* dataset contains all of the departing flights from airports in the NYC Area.
+
+```{r}
+library(pacman)
+
+p_load(mdsr, nycflights13, tidyverse, skimr, moderndive, infer)
+```
+
+Recall the *flights* dataframe.
+
+```{r}
+flights
+```
+
+Take a sample of flights from NYC to SF.  Get all of the flights to SF and take a sample of 25 of them.
+
+Note that I did not set a seed for the sample, so your answers will differ from what is in the book.
+
+```{r}
+SF <- flights %>% 
+  filter(dest == "SFO", !is.na(arr_delay))
+SF
+```
+
+```{r}
+sf_25 <- SF %>%
+  dplyr::slice_sample(n = 25)
+sf_25
+```
+
+Get the summary statistics for the sample taken.
+
+```{r}
+sf_25 %>%
+  skim(arr_delay)
+```
+
+Since the SF dataset contains all flights from NYC to SF in 2013, the statistics computed from the SF dataset are the calculated population paramaters.
+
+```{r}
+SF %>%
+  skim(arr_delay)
+```
+
+Get the 98th percentile of the sample.
+
+```{r}
+sf_25 %>%
+  summarize(q98 = quantile(arr_delay, p = 0.98))
+```
+
+Get the estimated proportion of flights to SF with a delay less than 90 minutes.
+
+```{r}
+SF %>%
+  group_by(arr_delay < 90) %>%
+  count() %>%
+  mutate(pct = n / nrow(SF))
+```
+
+Compare with the 98th percentile.  90 minutes is the 95th percentile.
+
+```{r}
+SF %>%
+  summarize(q98 = quantile(arr_delay, p = 0.98))
+```
+
+## Sample Statistics
+
+The sampling distribution.
+
+Usually sampling is done without replacement.
+
+```{r}
+n <- 25
+SF %>%
+  dplyr::slice_sample(n = n) %>%
+  summarize(mean_arr_delay = mean(arr_delay))
+```
+
+```{r}
+n <- 25
+SF %>%
+  infer::rep_slice_sample(n = n, reps = 1) %>%
+  summarize(mean_arr_delay = mean(arr_delay))
+```
+
+Note that a different random sample produces a different value for the sample statistic.
+
+```{r}
+SF %>%
+  infer::rep_slice_sample(n = n, reps = 1) %>%
+  summarize(mean_arr_delay = mean(arr_delay))
+```
+
+Using simulation we can approximate the sampling distribution of the sample statistics.  Here we are computing the mean, but we could do this for any statistic we are interested in, the median, sample variance, sample standard deviation, etc.
+
+
+```{r}
+num_trials <- 500
+
+n <- 25
+
+sf_25_means <- SF %>%
+  infer::rep_slice_sample(n = n, reps = num_trials) %>%
+  summarize(mean_arr_delay = mean(arr_delay)) %>%
+  mutate(n = n)
+
+head(sf_25_means)
+```
+
+Summarize the sample means.  
+
+```{r}
+sf_25_means %>%
+  skim(mean_arr_delay)
+```
+
+Confidence intervals
+
+```{r}
+sf_25_means %>%
+  summarize(
+    x_bar = mean(mean_arr_delay),
+    se = sd(mean_arr_delay)
+  ) %>%
+  mutate(
+    ci_lower = x_bar - 2 * se, # approximately 95% of observations 
+    ci_upper = x_bar + 2 * se  # are within two standard errors
+  ) 
+```
+
+Alternatively, it can be calculated directly using a t-test.
+
+```{r}
+sf_25_means %>%
+  infer::t_test(response = mean_arr_delay)
+```
+
+Using a larger sample size give a smaller Standard Error.
+
+```{r}
+n <- 100
+
+sf_100_means <- SF %>% infer::rep_slice_sample(n = n, reps = num_trials) %>% 
+  group_by(replicate) %>% 
+  summarize(mean_arr_delay = mean(arr_delay)) %>%
+  mutate(n = n)
+
+head(sf_100_means)
+```
+
+Plots to compare the sampling distributions with different sample sizes.
+
+```{r}
+sf_25_means %>%
+  bind_rows(sf_100_means) %>%
+  ggplot(aes(x = mean_arr_delay)) + 
+  geom_histogram(bins = 30) + 
+  facet_grid( ~ n) + 
+  xlab("Sample mean")
+```
+
+## Boostrap
+
+Usually for random sampling we sample without replacement.
+
+```{r}
+three_flights <- SF %>%
+  slice_sample(n = 3, replace = FALSE) %>%
+  select(year, month, day, dep_time)
+three_flights
+```
+
+With the Bootstrap we use sampling **with replacement**
+
+```{r}
+three_flights %>% slice_sample(n = 3, replace = TRUE)
+```
+
+```{r}
+n <- 200
+
+orig_sample <- SF %>% 
+  slice_sample(n = n, replace = FALSE)
+orig_sample
+```
+
+The reason for sampling with replacement is that we only have the Original Sample of size $n$.  We do not have the population.  So if we sampled with out replacement we would only have one sample to look at.  Sampling the Original Sample with replace allow us to general lots of samples and to investigate the variability of these samples.
+
+```{r}
+orig_sample %>%
+  slice_sample(n = n, replace = TRUE) %>%
+  summarize(mean_arr_delay = mean(arr_delay))
+```
+
+
+```{r}
+
+sf_200_bs <- orig_sample %>% infer::rep_slice_sample(n = n, replace = TRUE, reps = num_trials) %>%
+  summarize(mean_arr_delay = mean(arr_delay)) %>%
+  mutate(n = n)
+
+sf_200_bs %>%
+  skim(mean_arr_delay)
+
+sf_200_bs %>% ggplot(aes(x = mean_arr_delay)) +
+  geom_histogram()
+
+```
+
+Compare with the entire population.
+
+```{r}
+sf_200_pop <- SF %>% infer::rep_slice_sample(n = n, replace = TRUE, reps = num_trials)  %>%
+  summarize(mean_arr_delay = mean(arr_delay)) %>%
+  mutate(n = n)
+
+sf_200_pop %>%
+  skim(mean_arr_delay)
+
+sf_200_pop %>% ggplot(aes(x = mean_arr_delay)) +
+  geom_histogram()
+```
+
+**Question:** Do the histograms look somewhat similar?
+
+
+# Using the code from the Modern Dive book.
+
+To learn about the [infer](https://infer.netlify.app/articles/infer.html) package this is a good link to start with.
+
+```{r}
+orig_sample %>% 
+  specify(response = arr_delay) %>% 
+  calculate(stat = "mean")
+```
+
+```{r}
+bootstrap_distribution <- orig_sample %>% 
+  specify(formula = arr_delay ~ NULL) %>% 
+  generate(reps = num_trials, type = "bootstrap") %>% 
+  calculate(stat = "mean")
+bootstrap_distribution
+```
+
+```{r}
+bootstrap_distribution %>% visualize()
+```
+
+See the Modern Dive book for the infer process.
+
+![](https://d33wubrfki0l68.cloudfront.net/1cd0a53125c3b7dc4b12c04780f7f5b204ecbb1e/98111/images/flowcharts/infer/visualize.png)
+
+![](https://d33wubrfki0l68.cloudfront.net/addb5a5e70ed574cc9b431bf3704df7aa84a8a10/e48d7/images/flowcharts/infer/ci_diagram.png)
+
+```{r}
+percentile_ci <- bootstrap_distribution %>% 
+  get_confidence_interval(level = 0.95, type = "percentile")
+percentile_ci
+```
+
+```{r}
+bootstrap_distribution %>% visualize() + 
+  shade_confidence_interval(endpoints = percentile_ci)
+```
+
+# Example: Setting travel policy
+
+```{r}
+orig_sample %>%
+  summarize(q98 = quantile(arr_delay, p = 0.98))
+```
+
+```{r}
+n <- nrow(orig_sample)
+sf_200_bs <- orig_sample %>% infer::rep_slice_sample(n = n, replace = TRUE, reps = num_trials) %>% 
+  summarize(q98 = quantile(arr_delay, p = 0.98))
+
+sf_200_bs %>%
+  skim(q98)
+```
+
+
+```{r}
+n_large <- 10000
+sf_10000_bs <- SF %>% slice_sample(n = n_large, replace = FALSE)
+
+sf_200_bs <- sf_10000_bs %>% infer::rep_slice_sample(n = n, replace = TRUE, reps = num_trials) %>% 
+  summarize(q98 = quantile(arr_delay, p = 0.98))
+  
+
+sf_200_bs %>%
+  skim(q98)
+```
+
+## outliers
+
+```{r}
+SF %>%
+  filter(arr_delay >= 420) %>% 
+  select(month, day, dep_delay, arr_delay, carrier)
+```
+
+```{r}
+SF %>% 
+  filter(arr_delay < 420) %>%
+  ggplot(aes(arr_delay)) + 
+  geom_histogram(binwidth = 15) + 
+  labs(x = "Arrival delay (in minutes)")
+```
+
+
+```{r}
+SF %>%
+  group_by(hour) %>%
+  count() %>%
+  pivot_wider(names_from = hour, values_from = n) %>%
+  data.frame()
+```
+
+```{r}
+SF %>%
+  ggplot(aes(x = hour, y = arr_delay)) +
+  geom_boxplot(alpha = 0.1, aes(group = hour)) +
+  geom_smooth(method = "lm") + 
+  xlab("Scheduled hour of departure") + 
+  ylab("Arrival delay (minutes)") + 
+  coord_cartesian(ylim = c(-30, 120)) 
+```
+
+```{r}
+mod1 <- lm(arr_delay ~ hour, data = SF)
+broom::tidy(mod1)
+```
+
+
+
