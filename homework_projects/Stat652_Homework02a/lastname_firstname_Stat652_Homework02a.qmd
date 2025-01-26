@@ -1,0 +1,110 @@
+---
+title: "Stat. 652 Homework02a"
+author: "Your Name, first and last"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+format: 
+  html:
+    embed-resources: true
+---
+
+- **Read:** 
+       - [mdsr2e](https://mdsr-book.github.io/mdsr2e/) [Chapter 10](https://mdsr-book.github.io/mdsr2e/ch-modeling.html)
+       - [mdsr2e](https://mdsr-book.github.io/mdsr2e/) [Chapter 11](https://mdsr-book.github.io/mdsr2e/ch-learningI.html)
+       - Machine Learning with R, Second Edition, Chapter 3, 5, second half of Chapter 6.  To access the book [CSUEB Library Databases A-Z](https://library.csueastbay.edu/az.php?a=s) > Safari Books Online, register and access the book
+- **Problems:**
+       - 10.6 Exercises: Problem 3
+       - 11.7 Exercises: Problem 6a, Run Models 1. Null Model, 2. Logistic Regression, 6. kNN, using training and test datasets, as described in part c of the problem.
+
+Hint: For Problems 6a and 6b, explore the dataset before attempting to fit the models.  You will need to deal with the missing values before applying some or all of the models.  Which models do not work with missing data?
+
+**Instructions:** Answer all questions in the space below the # headers.
+
+
+# 10.6 Exercises: Problem 3
+
+Investigators in the HELP (Health Evaluation and Linkage to Primary Care) study were interested in modeling the probability of being homeless (one or more nights spent on the street or in a shelter in the past six months vs. housed) as a function of age.
+
+a) Generate a confusion matrix for the null model and interpret the result.
+b) Fit and interpret logistic regression model for the probability of being homeless as a function of age.
+c) What is the predicted probability of being homeless for a 20 year old? For a 40 year old?
+d) Generate a confusion matrix for the second model and interpret the result.
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+# 11.7 Exercises: Problem 4
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+# 11.7 Exercises: Problem 6a
+
+Run Models 1. Null Model, 2. Logistic Regression, 6. kNN, using training and test datasets, as described in part c of the problem.
+
+The ability to get a good night’s sleep is correlated with many positive health outcomes. The NHANES data set contains a binary variable SleepTrouble that indicates whether each person has trouble sleeping.
+
+For each of the following models:
+
+- Build a classifier for SleepTrouble
+- Report its effectiveness on the NHANES training data
+- Make an appropriate visualization of the model
+- Interpret the results. What have you learned about people’s sleeping habits?
+
+You may use whatever variables you like, except for SleepHrsNight.
+
+- Null model
+- Logistic regression
+- k-NN
+
+First separate the NHANES data set uniformly at random into 75% training and 25% testing sets. 
+
+# Model 1: Null Model
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+# Model 2: Logistic Regression
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+# Model 7: kNN
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+

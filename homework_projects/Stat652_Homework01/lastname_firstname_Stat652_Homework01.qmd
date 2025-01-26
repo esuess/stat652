@@ -1,0 +1,79 @@
+---
+title: "Stat. 652 Homework01"
+author: "Eric Suess"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+format: 
+  html:
+    embed-resources: true
+---
+
+- **Read:** 
+       - [mdsr2e](https://mdsr-book.github.io/mdsr2e/) [Chapter 9](https://mdsr-book.github.io/mdsr2e/ch-foundations.html)
+       - Machine Learning with R, Second Edition, first half of the Chapter 6.  To access the book [CSUEB Library Databases A-Z](https://library.csueastbay.edu/az.php?a=s) > Safari Books Online, register and access the book
+- **Problems:** 
+       - 9.9 Exercises: Problem 2, Problem 3 
+       - 9.10 Supplemental exercises: Problem 2     
+
+**Instructions:** Answer all questions in the space below the # headers.
+
+
+# 9.9 Exercises, Problem 2
+
+Calculate and interpret a 95% confidence interval for the mean age of mothers from the *Gestation* data set from the *mosaicData* package.
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+library(mosaic)
+
+Gestation %>% select(age) %>%
+  t.test()
+```
+
+# 9.9 Exercises, Problem 3
+
+Use the bootstrap to generate and interpret a 95% confidence interval for the median age of mothers for the *Gestation* data set from the *mosaicData* package.
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+# 9.10 Supplemental exerises, Problem 2a
+
+Consider the results from the model of *Dist* as a function of *Cond* (first model). Briefly summarize what this model says about the relationship between the wind conditions and the distance traveled by the ball. Make sure to say something sensible about the strength of evidence that there is any relationship at all.
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+# 9.10 Supplemental exerises, Problem 2b
+
+Briefly summarize the model that has *Dist* as the response variable and includes the other variables as explanatory variables (second model) by reporting and interpreting the *CondTail* parameter. This second model suggests a somewhat different result for the relationship between *Dist* and *Cond*. Summarize the differences and explain in statistical terms why the inclusion of the other explanatory variables has affected the results.
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+

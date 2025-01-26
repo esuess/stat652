@@ -1,0 +1,69 @@
+---
+title: "Stat. 652 Homework02b"
+author: "Your Name, first and last"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+format: 
+  html:
+    embed-resources: true
+---
+
+- **Read:** 
+       - [mdsr2e](https://mdsr-book.github.io/mdsr2e/) [Chapter 10](https://mdsr-book.github.io/mdsr2e/ch-modeling.html)
+       - [mdsr2e](https://mdsr-book.github.io/mdsr2e/) [Chapter 11](https://mdsr-book.github.io/mdsr2e/ch-learningI.html)
+       - Machine Learning with R, Second Edition, Chapter 3, 5, second half of Chapter 6.  To access the book [CSUEB Library Databases A-Z](https://library.csueastbay.edu/az.php?a=s) > Safari Books Online, register and access the book
+- **Problems:**
+       - 11.7 Exercises: Problem 6b, Run Models 1. Null Model, 2. Multiple Linear Regression, 3. Decision Tree, using CART, from the R package rpart, using training and test datasets, as described in part c of the problem.
+
+Hint: For Problems 6a and 6b, explore the dataset before attempting to fit the models.  You will need to deal with the missing values before applying some or all of the models.  Which models do not work with missing data?
+
+**Instructions:** Answer all questions in the space below the # headers.
+
+# 11.7 Exercises: Problem 6b
+
+Run Models 1. Null Model, 2. Multiple Linear Regression, 3. Decision Tree, using CART, from the R package rpart, using training and test datasets, as described in part c of the problem.
+
+Use the quantitative response variable SleepHrsNight. Build and interpret the following models:
+
+- Null model
+- Multiple regression
+- Regression tree (Decision Tree)
+
+# Model 1: Null Model
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+# Model 2: Multiple Linear Regression
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+# Model 3: Decision Tree
+
+### **Answer:**
+
+Summarize your answer to the question here.  All code and comments should be below and your written answer above.
+
+### **Code and Comments:**
+
+```{r}
+
+```
+
+
+
+
